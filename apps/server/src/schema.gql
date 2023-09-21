@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  videoSearch(query: String!): [Video!]!
+}
+
+type Video {
+  title: String!
+  videoId: String!
+  videoThumbnails: [VideoThumbnail!]!
+}
+
+type VideoThumbnail {
+  height: Int!
+  quality: String!
+  url: String!
+  width: Int!
+}

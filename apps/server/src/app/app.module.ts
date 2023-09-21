@@ -5,16 +5,17 @@ import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { VideosResolver } from './videos/videos.resolver';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'apps/server/src/schema.gql'),
       sortSchema: true
     })
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, VideosResolver],
 })
 export class AppModule {}

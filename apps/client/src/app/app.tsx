@@ -1,13 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ChakraProvider } from '@chakra-ui/react'
 
-import NxWelcome from './nx-welcome';
+import Search from './search/search';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3000/graphql',
+  cache: new InMemoryCache()
+})
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="kidtube" />
-    </div>
+    <ApolloProvider client={client}>
+      <ChakraProvider>
+        <Search />
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 

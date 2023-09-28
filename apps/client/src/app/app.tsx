@@ -1,7 +1,7 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react'
 
-import Search from './search/search';
+import Search from './search/Search';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',

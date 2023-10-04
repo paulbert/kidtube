@@ -1,15 +1,19 @@
 import { render } from '@testing-library/react';
+import { MockedProvider } from "@apollo/client/testing";
 
-import App from './app';
+import { BaseApp } from "./app";
+
+function App() {
+  return (
+    <MockedProvider>
+      <BaseApp />
+    </MockedProvider>
+  );
+}
 
 describe('App', () => {
   it('should render successfully', () => {
     const { baseElement } = render(<App />);
     expect(baseElement).toBeTruthy();
-  });
-
-  it('should have a greeting as the title', () => {
-    const { getByText } = render(<App />);
-    expect(getByText(/Welcome kidtube/gi)).toBeTruthy();
   });
 });

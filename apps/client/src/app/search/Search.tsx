@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Video } from '../../gql/graphql';
 import VideoSearchCard from './VideoSearchCard';
 
-const videoSearchQuery = gql`
+export const videoSearchQuery = gql`
   query VideoSearch($query: String!) {
     videoSearch(query: $query) {
       videoId
@@ -27,12 +27,12 @@ const Search = () => {
   return (
     <Container maxW="container.lg" my={4}>
       <Flex align="center" gap={2}>
-        <Input size="lg" onChange={(e) => setQuery(e.target.value)}/>
+        <Input size="lg" onChange={(e) => setQuery(e.target.value)} placeholder="Search for videos" />
         <Button onClick={(e) => refetch({ query })}>Search</Button>
       </Flex>
-      <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-        {data?.videoSearch.map(({ title, videoThumbnails }: Video) => (
-          <VideoSearchCard title={title} videoThumbnails={videoThumbnails} />
+      <Grid templateColumns="repeat(3, 1fr)" gap={4} data-testid="search-grid">
+        {data?.videoSearch.map(({ title, videoThumbnails, videoId }: Video) => (
+          <VideoSearchCard title={title} videoThumbnails={videoThumbnails} key={videoId} />
         ))}
       </Grid>
     </Container>

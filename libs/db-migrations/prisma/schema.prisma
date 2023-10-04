@@ -1,0 +1,13 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Group {
+  id            Int    @id @default(autoincrement())
+  name          String
+  banner_url    String
+  thumbnail_url String?
+
+  @@map("groups")
+}

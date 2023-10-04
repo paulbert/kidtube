@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from './search/Search';
 
@@ -12,7 +13,11 @@ export function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-        <Search />
+        <BrowserRouter future={{ v7_startTransition: true }}>
+          <Routes>
+            <Route path="/" element={<Search />}></Route>
+          </Routes>
+        </BrowserRouter>
       </ChakraProvider>
     </ApolloProvider>
   );

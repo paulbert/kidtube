@@ -70,6 +70,9 @@ describe('Search', () => {
       getAllByText('Rainbow Cats');
       fail('Should not display search result');
     } catch (e) {
+      if (!(e instanceof Error)) {
+        fail('Unexpected error');
+      }
       expect(e.message).toContain('Unable to find an element');
     }
   });

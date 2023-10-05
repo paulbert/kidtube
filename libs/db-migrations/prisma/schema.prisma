@@ -4,10 +4,32 @@ datasource db {
 }
 
 model Group {
-  id            Int    @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   name          String
   banner_url    String
   thumbnail_url String?
+  seasons       Season[]
 
   @@map("groups")
+}
+
+model Season {
+  id            Int     @id @default(autoincrement())
+  group         Group   @relation(fields: [group_id], references: [id])
+  group_id      Int
+  order         Int
+  videos        Video[]
+
+  @@map("seasons")
+}
+
+model Video {
+  id            String  @id
+  title         String
+  thumbnail_url String
+  order         String
+  season        Season  @relation(fields: [season_id], references: [id])
+  season_id     Int
+
+  @@map("videos")
 }

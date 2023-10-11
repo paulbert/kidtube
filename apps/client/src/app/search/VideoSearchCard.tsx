@@ -8,7 +8,7 @@ const VideoSearchCard = ({ title, videoThumbnails }: Pick<Video, "title" | "vide
     <GridItem>
       <Card boxShadow="none">
         <CardBody>
-          <Image src={videoThumbnailUrl} borderRadius="lg" />
+          <Image src={videoThumbnailUrl} borderRadius="lg" alt="" />
           <Text mt={2}>{title}</Text>
         </CardBody>
       </Card>

@@ -15,17 +15,17 @@ const mocks = [
           {
             videoId: '1',
             title: 'Rainbow Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'default' }]
+            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
           },
           {
             videoId: '2',
             title: 'Singing Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'default' }]
+            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
           },
           {
             videoId: '3',
             title: 'Piano Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'default' }]
+            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
           }
         ]
       }

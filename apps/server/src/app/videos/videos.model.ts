@@ -15,7 +15,7 @@ export class Video {
 @ObjectType()
 export class VideoThumbnail {
   @Field()
-  quality: string
+  quality: string;
 
   @Field()
   url: string;

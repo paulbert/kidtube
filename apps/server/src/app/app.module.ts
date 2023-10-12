@@ -12,8 +12,8 @@ import { VideosResolver } from './videos/videos.resolver';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'apps/server/src/schema.gql'),
-      sortSchema: true
-    })
+      sortSchema: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, VideosResolver],

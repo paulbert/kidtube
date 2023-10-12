@@ -17,27 +17,33 @@ export const videoSearchQuery = gql`
       }
     }
   }
-`
+`;
 
 const Search = () => {
-
   const { data, refetch } = useQuery(videoSearchQuery);
-  const [ query, setQuery ] = useState('');
+  const [query, setQuery] = useState('');
 
   return (
     <Container maxW="container.lg" my={4}>
       <Flex align="center" gap={2}>
-        <Input size="lg" onChange={(e) => setQuery(e.target.value)} placeholder="Search for videos" />
-        <Button onClick={(e) => refetch({ query })}>Search</Button>
+        <Input
+          size="lg"
+          onChange={e => setQuery(e.target.value)}
+          placeholder="Search for videos"
+        />
+        <Button onClick={e => refetch({ query })}>Search</Button>
       </Flex>
       <Grid templateColumns="repeat(3, 1fr)" gap={4} data-testid="search-grid">
         {data?.videoSearch.map(({ title, videoThumbnails, videoId }: Video) => (
-          <VideoSearchCard title={title} videoThumbnails={videoThumbnails} key={videoId} />
+          <VideoSearchCard
+            title={title}
+            videoThumbnails={videoThumbnails}
+            key={videoId}
+          />
         ))}
       </Grid>
     </Container>
   );
-
-}
+};
 
 export default Search;

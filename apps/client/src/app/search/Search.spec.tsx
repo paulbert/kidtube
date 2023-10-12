@@ -7,7 +7,7 @@ const mocks = [
   {
     request: {
       query: videoSearchQuery,
-      variables: { query: 'cats' }
+      variables: { query: 'cats' },
     },
     result: {
       data: {
@@ -15,34 +15,40 @@ const mocks = [
           {
             videoId: '1',
             title: 'Rainbow Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
+            videoThumbnails: [
+              { url: '', height: 100, width: 200, quality: 'medium' },
+            ],
           },
           {
             videoId: '2',
             title: 'Singing Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
+            videoThumbnails: [
+              { url: '', height: 100, width: 200, quality: 'medium' },
+            ],
           },
           {
             videoId: '3',
             title: 'Piano Cats',
-            videoThumbnails: [{ url: '', height: 100, width: 200, quality: 'medium' }]
-          }
-        ]
-      }
-    }
+            videoThumbnails: [
+              { url: '', height: 100, width: 200, quality: 'medium' },
+            ],
+          },
+        ],
+      },
+    },
   },
   {
     request: {
       query: videoSearchQuery,
-      variables: {}
+      variables: {},
     },
     result: {
       data: {
-        videoSearch: []
-      }
-    }
-  }
-]
+        videoSearch: [],
+      },
+    },
+  },
+];
 
 function renderSearch() {
   return render(

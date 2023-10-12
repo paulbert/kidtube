@@ -1,14 +1,26 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import VideoSearchCard from './VideoSearchCard';
 
 const mockVideo = {
   videoId: '1',
   title: 'Rainbow Cats',
-  videoThumbnails: [{ url: 'http://roygbivcat.jpg', height: 100, width: 200, quality: 'medium' }]
+  videoThumbnails: [
+    {
+      url: 'http://roygbivcat.jpg',
+      height: 100,
+      width: 200,
+      quality: 'medium',
+    },
+  ],
 };
 
 function renderVideoSearchCard() {
-  return render(<VideoSearchCard title={mockVideo.title} videoThumbnails={mockVideo.videoThumbnails} />)
+  return render(
+    <VideoSearchCard
+      title={mockVideo.title}
+      videoThumbnails={mockVideo.videoThumbnails}
+    />
+  );
 }
 
 describe('VideoSearchCard', () => {

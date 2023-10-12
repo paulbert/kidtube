@@ -1,10 +1,22 @@
-import { ButtonGroup, Card, CardBody, CardFooter, GridItem, Image, Text } from "@chakra-ui/react";
-import { Video } from "../../gql/graphql";
-import VideoAddModal from "./VideoAddModal";
+import {
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  GridItem,
+  Image,
+  Text,
+} from '@chakra-ui/react';
+import { Video } from '../../gql/graphql';
+import VideoAddModal from './VideoAddModal';
 
-
-const VideoSearchCard = ({ title, videoThumbnails }: Pick<Video, "title" | "videoThumbnails">) => {
-  const videoThumbnailUrl = videoThumbnails.find(thumbnail => thumbnail.quality === "medium")?.url;
+const VideoSearchCard = ({
+  title,
+  videoThumbnails,
+}: Pick<Video, 'title' | 'videoThumbnails'>) => {
+  const videoThumbnailUrl = videoThumbnails.find(
+    thumbnail => thumbnail.quality === 'medium'
+  )?.url;
   return (
     <GridItem>
       <Card boxShadow="none">
@@ -20,6 +32,6 @@ const VideoSearchCard = ({ title, videoThumbnails }: Pick<Video, "title" | "vide
       </Card>
     </GridItem>
   );
-}
+};
 
 export default VideoSearchCard;

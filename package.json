@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "dev": "npx nx run-many --parallel --target=serve --projects=client,server"
   },
   "private": true,
   "dependencies": {

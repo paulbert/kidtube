@@ -19,6 +19,9 @@ class AddVideosToGroupInput {
 
   @Field({ nullable: true })
   name: string;
+
+  @Field()
+  videoIds: string[];
 }
 
 @Resolver(of => Group)

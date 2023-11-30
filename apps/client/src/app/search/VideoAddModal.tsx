@@ -48,7 +48,15 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
     useMutation<AddVideosToGroupMutation>(addVideosToGroupMutation);
 
   const addVideo = () => {
-    addVideosToGroup({ variables: { data: { name: newShowName } } });
+    if (selectedShow === 'add') {
+      addVideosToGroup({
+        variables: { data: { name: newShowName, videoIds: videoIds } },
+      });
+    } else {
+      addVideosToGroup({
+        variables: { data: { id: selectedShow, videoIds: videoIds } },
+      });
+    }
   };
 
   const closeModal = () => {

@@ -2,7 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddVideosToGroupInput {
+  id: Float
+  name: String
+}
+
+type Group {
+  banner_url: String!
+  id: Float!
+  name: String!
+  thumbnail_url: String!
+}
+
+type Mutation {
+  addVideosToGroup(data: AddVideosToGroupInput!): Group!
+}
+
 type Query {
+  getAllGroups: [Group!]!
   videoSearch(query: String!): [Video!]!
 }
 

@@ -16,8 +16,32 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AddVideosToGroupInput = {
+  id?: InputMaybe<Scalars['Float']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Group = {
+  __typename?: 'Group';
+  banner_url: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  thumbnail_url: Scalars['String']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addVideosToGroup: Group;
+};
+
+
+export type MutationAddVideosToGroupArgs = {
+  data: AddVideosToGroupInput;
+};
+
 export type Query = {
   __typename?: 'Query';
+  getAllGroups: Array<Group>;
   videoSearch: Array<Video>;
 };
 
@@ -48,5 +72,19 @@ export type VideoSearchQueryVariables = Exact<{
 
 export type VideoSearchQuery = { __typename?: 'Query', videoSearch: Array<{ __typename?: 'Video', videoId: string, title: string, videoThumbnails: Array<{ __typename?: 'VideoThumbnail', url: string, height: number, width: number, quality: string }> }> };
 
+export type GetAllGroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllGroupsQuery = { __typename?: 'Query', getAllGroups: Array<{ __typename?: 'Group', id: number, name: string }> };
+
+export type AddVideosToGroupMutationVariables = Exact<{
+  data: AddVideosToGroupInput;
+}>;
+
+
+export type AddVideosToGroupMutation = { __typename?: 'Mutation', addVideosToGroup: { __typename?: 'Group', name: string } };
+
 
 export const VideoSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VideoSearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"videoThumbnails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"quality"}}]}}]}}]}}]} as unknown as DocumentNode<VideoSearchQuery, VideoSearchQueryVariables>;
+export const GetAllGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetAllGroupsQuery, GetAllGroupsQueryVariables>;
+export const AddVideosToGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddVideosToGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddVideosToGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addVideosToGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AddVideosToGroupMutation, AddVideosToGroupMutationVariables>;

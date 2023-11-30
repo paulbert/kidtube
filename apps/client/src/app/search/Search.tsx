@@ -38,6 +38,7 @@ const Search = () => {
           <VideoSearchCard
             title={title}
             videoThumbnails={videoThumbnails}
+            videoId={videoId}
             key={videoId}
           />
         ))}

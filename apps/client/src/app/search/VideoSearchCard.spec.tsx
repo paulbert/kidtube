@@ -19,6 +19,7 @@ function renderVideoSearchCard() {
     <VideoSearchCard
       title={mockVideo.title}
       videoThumbnails={mockVideo.videoThumbnails}
+      videoId={mockVideo.videoId}
     />
   );
 }

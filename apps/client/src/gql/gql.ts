@@ -14,6 +14,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query VideoSearch($query: String!) {\n    videoSearch(query: $query) {\n      videoId\n      title\n      videoThumbnails {\n        url\n        height\n        width\n        quality\n      }\n    }\n  }\n": types.VideoSearchDocument,
+    "\n  query GetAllGroups {\n    getAllGroups {\n      id\n      name\n    }\n  }\n": types.GetAllGroupsDocument,
+    "\n  mutation AddVideosToGroup($data: AddVideosToGroupInput!) {\n    addVideosToGroup(data: $data) {\n      name\n    }\n  }\n": types.AddVideosToGroupDocument,
 };
 
 /**
@@ -34,6 +36,14 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query VideoSearch($query: String!) {\n    videoSearch(query: $query) {\n      videoId\n      title\n      videoThumbnails {\n        url\n        height\n        width\n        quality\n      }\n    }\n  }\n"): (typeof documents)["\n  query VideoSearch($query: String!) {\n    videoSearch(query: $query) {\n      videoId\n      title\n      videoThumbnails {\n        url\n        height\n        width\n        quality\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetAllGroups {\n    getAllGroups {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query GetAllGroups {\n    getAllGroups {\n      id\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddVideosToGroup($data: AddVideosToGroupInput!) {\n    addVideosToGroup(data: $data) {\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation AddVideosToGroup($data: AddVideosToGroupInput!) {\n    addVideosToGroup(data: $data) {\n      name\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

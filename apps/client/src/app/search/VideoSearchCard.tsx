@@ -13,7 +13,8 @@ import VideoAddModal from './VideoAddModal';
 const VideoSearchCard = ({
   title,
   videoThumbnails,
-}: Pick<Video, 'title' | 'videoThumbnails'>) => {
+  videoId,
+}: Pick<Video, 'title' | 'videoThumbnails' | 'videoId'>) => {
   const videoThumbnailUrl = videoThumbnails.find(
     thumbnail => thumbnail.quality === 'medium'
   )?.url;
@@ -26,7 +27,7 @@ const VideoSearchCard = ({
         </CardBody>
         <CardFooter>
           <ButtonGroup spacing={2}>
-            <VideoAddModal buttonText="Add video" />
+            <VideoAddModal buttonText="Add video" videoIds={[videoId]} />
           </ButtonGroup>
         </CardFooter>
       </Card>

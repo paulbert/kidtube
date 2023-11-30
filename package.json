@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
-    "dev": "npx nx run-many --parallel --target=serve --projects=client,server"
+    "dev": "npx nx run-many --parallel --target=serve --projects=client,server",
+    "prisma-generate": "npx prisma generate --schema=./libs/db-migrations/prisma/schema.prisma"
   },
   "private": true,
   "dependencies": {
@@ -16,6 +17,7 @@
     "@nestjs/core": "^10.0.2",
     "@nestjs/graphql": "^12.0.8",
     "@nestjs/platform-express": "^10.0.2",
+    "@prisma/client": "^5.4.2",
     "@swc/helpers": "~0.5.0",
     "axios": "^1.0.0",
     "framer-motion": "^10.16.4",

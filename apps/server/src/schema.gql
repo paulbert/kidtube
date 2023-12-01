@@ -5,12 +5,14 @@
 input AddVideosToGroupInput {
   id: Float
   name: String
+  videoIds: [String!]!
 }
 
 type Group {
   banner_url: String!
   id: Float!
   name: String!
+  seasons: [Season!]!
   thumbnail_url: String!
 }
 
@@ -21,6 +23,13 @@ type Mutation {
 type Query {
   getAllGroups: [Group!]!
   videoSearch(query: String!): [Video!]!
+}
+
+type Season {
+  groupId: Float!
+  id: Float!
+  order: Float!
+  videos: Video!
 }
 
 type Video {

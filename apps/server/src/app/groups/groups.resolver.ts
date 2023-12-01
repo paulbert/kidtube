@@ -6,11 +6,14 @@ import {
   Field,
   Context,
   Query,
+  Parent,
+  ResolveField,
 } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 
 import { Group } from './groups.model';
 import { PrismaService } from '../prisma.service';
+import { Season } from '../seasons/seasons.model';
 
 @InputType()
 class AddVideosToGroupInput {
@@ -20,7 +23,7 @@ class AddVideosToGroupInput {
   @Field({ nullable: true })
   name: string;
 
-  @Field()
+  @Field(type => [String])
   videoIds: string[];
 }
 
@@ -29,7 +32,7 @@ export class GroupsResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(returns => [Group])
-  async getAllGroups(): Promise<Group[]> {
+  async getAllGroups() {
     return this.prismaService.group.findMany();
   }
 
@@ -37,12 +40,29 @@ export class GroupsResolver {
   async addVideosToGroup(
     @Args('data') data: AddVideosToGroupInput,
     @Context() ctx
-  ): Promise<Group> {
-    return this.prismaService.group.create({
+  ) {
+    const newGroup = await this.prismaService.group.create({
       data: {
         name: data.name,
-        banner_url: '',
+        bannerUrl: '',
       },
     });
+    await this.prismaService.season.create({
+      data: {
+        groupId: newGroup.id,
+        order: 1,
+      },
+    });
+    return newGroup;
+  }
+
+  @ResolveField(returns => [Season])
+  async seasons(@Parent() group: Group) {
+    console.log(group);
+    const seasons = await this.prismaService.season.findMany({
+      where: { groupId: group.id },
+    });
+    console.log(seasons);
+    return seasons;
   }
 }

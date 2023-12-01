@@ -21,6 +21,10 @@ export const getAllGroupsMutation = gql`
     getAllGroups {
       id
       name
+      seasons {
+        id
+        order
+      }
     }
   }
 `;

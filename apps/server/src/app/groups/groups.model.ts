@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Season } from '../seasons/seasons.model';
 
 @ObjectType()
 export class Group {
@@ -13,4 +14,7 @@ export class Group {
 
   @Field()
   thumbnail_url: string;
+
+  @Field(type => [Season])
+  seasons: Season[];
 }

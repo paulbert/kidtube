@@ -10,8 +10,8 @@ generator client {
 model Group {
   id            Int     @id @default(autoincrement())
   name          String
-  banner_url    String
-  thumbnail_url String?
+  bannerUrl     String  @map("banner_url")
+  thumbnailUrl  String? @map("thumbnail_url")
   seasons       Season[]
 
   @@map("groups")
@@ -19,8 +19,8 @@ model Group {
 
 model Season {
   id            Int     @id @default(autoincrement())
-  group         Group   @relation(fields: [group_id], references: [id])
-  group_id      Int
+  group         Group   @relation(fields: [groupId], references: [id])
+  groupId       Int     @map("group_id")
   order         Int
   videos        Video[]
 
@@ -30,10 +30,10 @@ model Season {
 model Video {
   id            String  @id
   title         String
-  thumbnail_url String
+  thumbnailUrl  String  @map("thumbnail_url")
   order         String
-  season        Season  @relation(fields: [season_id], references: [id])
-  season_id     Int
+  season        Season  @relation(fields: [seasonId], references: [id])
+  seasonId      Int     @map("season_id")
 
   @@map("videos")
 }

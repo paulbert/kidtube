@@ -16,7 +16,7 @@ import {
 import { useState } from 'react';
 import { AddVideosToGroupMutation, GetAllGroupsQuery } from '../../gql/graphql';
 
-export const getAllGroupsMutation = gql`
+export const getAllGroupsQuery = gql`
   query GetAllGroups {
     getAllGroups {
       id
@@ -50,7 +50,7 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
     data: groupsData,
     loading: loadingGroups,
     refetch,
-  } = useQuery<GetAllGroupsQuery>(getAllGroupsMutation);
+  } = useQuery<GetAllGroupsQuery>(getAllGroupsQuery);
   const [addVideosToGroup] = useMutation<AddVideosToGroupMutation>(
     addVideosToGroupMutation,
     {

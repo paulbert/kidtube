@@ -46,13 +46,20 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedShow, setSelectedShow] = useState('');
   const [newShowName, setNewShowName] = useState('');
-  const { data: groupsData, loading: loadingGroups, refetch } =
-    useQuery<GetAllGroupsQuery>(getAllGroupsMutation);
-  const [addVideosToGroup] =
-    useMutation<AddVideosToGroupMutation>(addVideosToGroupMutation, { onCompleted: () => {
-      refetch();
-      closeModal();
-    }});
+  const {
+    data: groupsData,
+    loading: loadingGroups,
+    refetch,
+  } = useQuery<GetAllGroupsQuery>(getAllGroupsMutation);
+  const [addVideosToGroup] = useMutation<AddVideosToGroupMutation>(
+    addVideosToGroupMutation,
+    {
+      onCompleted: () => {
+        refetch();
+        closeModal();
+      },
+    }
+  );
 
   const addVideo = () => {
     if (selectedShow === 'add') {
@@ -61,7 +68,7 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
       });
     } else {
       addVideosToGroup({
-        variables: { data: { id: selectedShow, videoIds: videoIds } },
+        variables: { data: { id: parseInt(selectedShow), videoIds: videoIds } },
       });
     }
   };

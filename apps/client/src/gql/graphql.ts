@@ -19,6 +19,7 @@ export type Scalars = {
 export type AddVideosToGroupInput = {
   id?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  videoIds: Array<Scalars['String']['input']>;
 };
 
 export type Group = {
@@ -26,6 +27,7 @@ export type Group = {
   banner_url: Scalars['String']['output'];
   id: Scalars['Float']['output'];
   name: Scalars['String']['output'];
+  seasons: Array<Season>;
   thumbnail_url: Scalars['String']['output'];
 };
 
@@ -48,6 +50,14 @@ export type Query = {
 
 export type QueryVideoSearchArgs = {
   query: Scalars['String']['input'];
+};
+
+export type Season = {
+  __typename?: 'Season';
+  groupId: Scalars['Float']['output'];
+  id: Scalars['Float']['output'];
+  order: Scalars['Float']['output'];
+  videos: Video;
 };
 
 export type Video = {
@@ -75,7 +85,7 @@ export type VideoSearchQuery = { __typename?: 'Query', videoSearch: Array<{ __ty
 export type GetAllGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllGroupsQuery = { __typename?: 'Query', getAllGroups: Array<{ __typename?: 'Group', id: number, name: string }> };
+export type GetAllGroupsQuery = { __typename?: 'Query', getAllGroups: Array<{ __typename?: 'Group', id: number, name: string, seasons: Array<{ __typename?: 'Season', id: number, order: number }> }> };
 
 export type AddVideosToGroupMutationVariables = Exact<{
   data: AddVideosToGroupInput;
@@ -86,5 +96,5 @@ export type AddVideosToGroupMutation = { __typename?: 'Mutation', addVideosToGro
 
 
 export const VideoSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VideoSearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"videoThumbnails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"quality"}}]}}]}}]}}]} as unknown as DocumentNode<VideoSearchQuery, VideoSearchQueryVariables>;
-export const GetAllGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetAllGroupsQuery, GetAllGroupsQueryVariables>;
+export const GetAllGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"seasons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllGroupsQuery, GetAllGroupsQueryVariables>;
 export const AddVideosToGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddVideosToGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddVideosToGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addVideosToGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AddVideosToGroupMutation, AddVideosToGroupMutationVariables>;

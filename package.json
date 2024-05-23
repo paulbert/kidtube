@@ -5,7 +5,8 @@
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
     "dev": "npx nx run-many --parallel --target=serve --projects=client,server",
-    "prisma-generate": "npx prisma generate --schema=./libs/db-migrations/prisma/schema.prisma"
+    "prisma-generate": "npx prisma generate --schema=./libs/db-migrations/prisma/schema.prisma",
+    "prisma-migrate": "npx prisma migrate dev --schema=./libs/db-migrations/prisma/schema.prisma"
   },
   "private": true,
   "dependencies": {

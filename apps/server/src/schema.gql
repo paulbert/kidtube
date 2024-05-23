@@ -5,7 +5,7 @@
 input AddVideosToGroupInput {
   id: Float
   name: String
-  videos: [String!]!
+  videos: [VideoInput!]!
 }
 
 type Group {
@@ -39,7 +39,20 @@ type Video {
   videoThumbnails: [VideoThumbnail!]!
 }
 
+input VideoInput {
+  title: String!
+  videoId: String!
+  videoThumbnails: [VideoThumbnailInput!]!
+}
+
 type VideoThumbnail {
+  height: Int!
+  quality: String!
+  url: String!
+  width: Int!
+}
+
+input VideoThumbnailInput {
   height: Int!
   quality: String!
   url: String!

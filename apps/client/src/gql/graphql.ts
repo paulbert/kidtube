@@ -19,7 +19,7 @@ export type Scalars = {
 export type AddVideosToGroupInput = {
   id?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  videoIds: Array<Scalars['String']['input']>;
+  videos: Array<VideoInput>;
 };
 
 export type Group = {
@@ -62,9 +62,16 @@ export type Season = {
 
 export type Video = {
   __typename?: 'Video';
+  order: Scalars['Float']['output'];
   title: Scalars['String']['output'];
   videoId: Scalars['String']['output'];
   videoThumbnails: Array<VideoThumbnail>;
+};
+
+export type VideoInput = {
+  title: Scalars['String']['input'];
+  videoId: Scalars['String']['input'];
+  videoThumbnails: Array<VideoThumbnailInput>;
 };
 
 export type VideoThumbnail = {
@@ -73,6 +80,13 @@ export type VideoThumbnail = {
   quality: Scalars['String']['output'];
   url: Scalars['String']['output'];
   width: Scalars['Int']['output'];
+};
+
+export type VideoThumbnailInput = {
+  height: Scalars['Int']['input'];
+  quality: Scalars['String']['input'];
+  url: Scalars['String']['input'];
+  width: Scalars['Int']['input'];
 };
 
 export type VideoSearchQueryVariables = Exact<{

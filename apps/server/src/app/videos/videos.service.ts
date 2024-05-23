@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
-import { Video } from './videos.model';
+import { VideoInput } from './videos.model';
 
 @Injectable()
 export class VideosService {
@@ -11,7 +11,7 @@ export class VideosService {
     videos,
     seasonId,
   }: {
-    videos: Video[];
+    videos: VideoInput[];
     seasonId: number;
   }) {
     const currentVideosInSeason = await this.prismaService.video.findMany({
@@ -28,6 +28,9 @@ export class VideosService {
       seasonId,
       order: index + maxOrder + 1,
     }));
-    return await this.prismaService.video.createMany({ data });
+    return await this.prismaService.video.createManyAndReturn({
+      data,
+      skipDuplicates: true,
+    });
   }
 }

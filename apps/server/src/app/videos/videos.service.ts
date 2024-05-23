@@ -22,7 +22,7 @@ export class VideosService {
       0
     );
     const data = videos.map((video, index) => ({
-      id: video.id,
+      id: video.videoId,
       title: video.title,
       thumbnailUrl: video.videoThumbnails[0].url,
       seasonId,

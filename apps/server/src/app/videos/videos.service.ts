@@ -8,10 +8,10 @@ export class VideosService {
   constructor(private prismaService: PrismaService) {}
 
   async addNewVideos({
-    videoIds,
+    videos,
     seasonId,
   }: {
-    videoIds: string[];
+    videos: Video[];
     seasonId: number;
   }) {
     const currentVideosInSeason = await this.prismaService.video.findMany({
@@ -21,8 +21,10 @@ export class VideosService {
       (mOrder, { order }) => (order > mOrder ? order : mOrder),
       0
     );
-    const data = videoIds.map((videoId, index) => ({
-      id: videoId,
+    const data = videos.map((video, index) => ({
+      id: video.id,
+      title: video.title,
+      thumbnailUrl: video.videoThumbnails[0].url,
       seasonId,
       order: index + maxOrder + 1,
     }));

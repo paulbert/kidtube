@@ -17,6 +17,7 @@ import { Season } from '../seasons/seasons.model';
 import { GroupsService } from './groups.service';
 import { SeasonsService } from '../seasons/seasons.service';
 import { VideosService } from '../videos/videos.service';
+import { Video } from '../videos/videos.model';
 
 @InputType()
 class AddVideosToGroupInput {
@@ -27,7 +28,7 @@ class AddVideosToGroupInput {
   name: string;
 
   @Field(type => [String])
-  videoIds: string[];
+  videos: Video[];
 }
 
 @Resolver(of => Group)
@@ -50,7 +51,7 @@ export class GroupsResolver {
     @Args('data') data: AddVideosToGroupInput,
     @Context() ctx
   ) {
-    const { name, id, videoIds } = data;
+    const { name, id, videos } = data;
     const group = await (id === undefined
       ? this.groupsService.createNewGroup({
           name,
@@ -60,7 +61,7 @@ export class GroupsResolver {
     const season = await this.seasonsService.createNewSeason({
       groupId: group.id,
     });
-    await this.videosService.addNewVideos({ videoIds, seasonId: season.id });
+    await this.videosService.addNewVideos({ videos, seasonId: season.id });
     return group;
   }
 

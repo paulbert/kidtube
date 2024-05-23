@@ -62,15 +62,13 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
   );
 
   const addVideo = () => {
-    if (selectedShow === 'add') {
-      addVideosToGroup({
-        variables: { data: { name: newShowName, videoIds: videoIds } },
-      });
-    } else {
-      addVideosToGroup({
-        variables: { data: { id: parseInt(selectedShow), videoIds: videoIds } },
-      });
-    }
+    const data =
+      selectedShow === 'add'
+        ? { name: newShowName, videoIds: videoIds }
+        : { id: parseInt(selectedShow), videoIds: videoIds };
+    addVideosToGroup({
+      variables: { data },
+    });
   };
 
   const closeModal = () => {

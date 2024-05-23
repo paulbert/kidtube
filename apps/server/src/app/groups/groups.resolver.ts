@@ -9,11 +9,15 @@ import {
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { Group } from './groups.model';
 import { PrismaService } from '../prisma.service';
 import { Season } from '../seasons/seasons.model';
+import { GroupsService } from './groups.service';
+import { SeasonsService } from '../seasons/seasons.service';
+import { VideosService } from '../videos/videos.service';
+import { VideoInput } from '../videos/videos.model';
 
 @InputType()
 class AddVideosToGroupInput {
@@ -23,13 +27,19 @@ class AddVideosToGroupInput {
   @Field({ nullable: true })
   name: string;
 
-  @Field(type => [String])
-  videoIds: string[];
+  @Field(type => [VideoInput])
+  videos: VideoInput[];
 }
 
 @Resolver(of => Group)
+@Injectable()
 export class GroupsResolver {
-  constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private prismaService: PrismaService,
+    private readonly groupsService: GroupsService,
+    private readonly seasonsService: SeasonsService,
+    private readonly videosService: VideosService
+  ) {}
 
   @Query(returns => [Group])
   async getAllGroups() {
@@ -41,28 +51,29 @@ export class GroupsResolver {
     @Args('data') data: AddVideosToGroupInput,
     @Context() ctx
   ) {
-    const newGroup = await this.prismaService.group.create({
-      data: {
-        name: data.name,
-        bannerUrl: '',
-      },
+    const { name, id, videos } = data;
+    const group = await (id === undefined
+      ? this.groupsService.createNewGroup({
+          name,
+        })
+      : this.prismaService.group.findUnique({ where: { id: id } }));
+    console.log(group);
+    const season = await this.seasonsService.createNewSeason({
+      groupId: group.id,
     });
-    await this.prismaService.season.create({
-      data: {
-        groupId: newGroup.id,
-        order: 1,
-      },
+    const insertedVideos = await this.videosService.addNewVideos({
+      videos,
+      seasonId: season.id,
     });
-    return newGroup;
+    console.log(insertedVideos);
+    return group;
   }
 
   @ResolveField(returns => [Season])
   async seasons(@Parent() group: Group) {
-    console.log(group);
     const seasons = await this.prismaService.season.findMany({
       where: { groupId: group.id },
     });
-    console.log(seasons);
     return seasons;
   }
 }

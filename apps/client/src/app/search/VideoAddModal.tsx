@@ -14,7 +14,11 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { AddVideosToGroupMutation, GetAllGroupsQuery } from '../../gql/graphql';
+import {
+  AddVideosToGroupMutation,
+  GetAllGroupsQuery,
+  Video,
+} from '../../gql/graphql';
 
 export const getAllGroupsQuery = gql`
   query GetAllGroups {
@@ -39,10 +43,10 @@ export const addVideosToGroupMutation = gql`
 
 type VideoAddModalProps = {
   buttonText: string;
-  videoIds: string[];
+  videos: Video[];
 };
 
-const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
+const VideoAddModal = ({ buttonText, videos }: VideoAddModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedShow, setSelectedShow] = useState('');
   const [newShowName, setNewShowName] = useState('');
@@ -62,15 +66,13 @@ const VideoAddModal = ({ buttonText, videoIds }: VideoAddModalProps) => {
   );
 
   const addVideo = () => {
-    if (selectedShow === 'add') {
-      addVideosToGroup({
-        variables: { data: { name: newShowName, videoIds: videoIds } },
-      });
-    } else {
-      addVideosToGroup({
-        variables: { data: { id: parseInt(selectedShow), videoIds: videoIds } },
-      });
-    }
+    const data =
+      selectedShow === 'add'
+        ? { name: newShowName, videos }
+        : { id: parseInt(selectedShow), videos };
+    addVideosToGroup({
+      variables: { data },
+    });
   };
 
   const closeModal = () => {

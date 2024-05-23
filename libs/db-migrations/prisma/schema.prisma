@@ -31,7 +31,7 @@ model Video {
   id            String  @id
   title         String
   thumbnailUrl  String  @map("thumbnail_url")
-  order         String
+  order         Int
   season        Season  @relation(fields: [seasonId], references: [id])
   seasonId      Int     @map("season_id")
 

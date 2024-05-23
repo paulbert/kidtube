@@ -10,11 +10,8 @@ import {
 import { Video } from '../../gql/graphql';
 import VideoAddModal from './VideoAddModal';
 
-const VideoSearchCard = ({
-  title,
-  videoThumbnails,
-  videoId,
-}: Pick<Video, 'title' | 'videoThumbnails' | 'videoId'>) => {
+const VideoSearchCard = ({ video }: { video: Video }) => {
+  const { title, videoThumbnails } = video;
   const videoThumbnailUrl = videoThumbnails.find(
     thumbnail => thumbnail.quality === 'medium'
   )?.url;
@@ -27,7 +24,7 @@ const VideoSearchCard = ({
         </CardBody>
         <CardFooter>
           <ButtonGroup spacing={2}>
-            <VideoAddModal buttonText="Add video" videoIds={[videoId]} />
+            <VideoAddModal buttonText="Add video" videos={[video]} />
           </ButtonGroup>
         </CardFooter>
       </Card>

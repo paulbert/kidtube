@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
 import VideoSearchCard from './VideoSearchCard';
+import { MockedProvider } from '@apollo/client/testing';
+import { getAllGroupsQuery } from './VideoAddModal';
 
 const mockVideo = {
   videoId: '1',
@@ -12,15 +14,33 @@ const mockVideo = {
       quality: 'medium',
     },
   ],
+  order: 1,
 };
+
+const mocks = [
+  {
+    request: {
+      query: getAllGroupsQuery,
+    },
+    result: {
+      data: {
+        getAllGroups: [
+          {
+            id: 1,
+            name: 'Rainbow Cats Forever',
+            seasons: { id: 1, order: 1 },
+          },
+        ],
+      },
+    },
+  },
+];
 
 function renderVideoSearchCard() {
   return render(
-    <VideoSearchCard
-      title={mockVideo.title}
-      videoThumbnails={mockVideo.videoThumbnails}
-      videoId={mockVideo.videoId}
-    />
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <VideoSearchCard video={mockVideo} />
+    </MockedProvider>
   );
 }
 

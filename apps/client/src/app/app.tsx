@@ -1,15 +1,28 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  from,
+  HttpLink,
+} from '@apollo/client';
+import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from './search/Search';
 
+const httpLink = new HttpLink({
+  uri: 'http://localhost:3000/graphql',
+});
+const removeTypenameLink = removeTypenameFromVariables();
+const link = from([removeTypenameLink, httpLink]);
+
 const isTest = process.env.NODE_ENV === 'test';
 const client = isTest
   ? null
   : new ApolloClient({
-      uri: 'http://localhost:3000/graphql',
       cache: new InMemoryCache(),
+      link,
     });
 
 // exported for testing

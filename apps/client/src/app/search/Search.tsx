@@ -34,13 +34,8 @@ const Search = () => {
         <Button onClick={e => refetch({ query })}>Search</Button>
       </Flex>
       <Grid templateColumns="repeat(3, 1fr)" gap={4} data-testid="search-grid">
-        {data?.videoSearch.map(({ title, videoThumbnails, videoId }: Video) => (
-          <VideoSearchCard
-            title={title}
-            videoThumbnails={videoThumbnails}
-            videoId={videoId}
-            key={videoId}
-          />
+        {data?.videoSearch.map((video: Video) => (
+          <VideoSearchCard video={video} key={video.videoId} />
         ))}
       </Grid>
     </Container>

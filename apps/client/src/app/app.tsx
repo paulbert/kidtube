@@ -11,20 +11,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from './search/Search';
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:3000/graphql',
-});
-const removeTypenameLink = removeTypenameFromVariables();
-const link = from([removeTypenameLink, httpLink]);
-
-const isTest = process.env.NODE_ENV === 'test';
-const client = isTest
-  ? null
-  : new ApolloClient({
-      cache: new InMemoryCache(),
-      link,
-    });
-
 // exported for testing
 export function BaseApp() {
   return (
@@ -39,6 +25,19 @@ export function BaseApp() {
 }
 
 export function App() {
+  const httpLink = new HttpLink({
+    uri: 'http://localhost:3000/graphql',
+  });
+  const removeTypenameLink = removeTypenameFromVariables();
+  const link = from([removeTypenameLink, httpLink]);
+
+  const isTest = process.env.NODE_ENV === 'test';
+  const client = isTest
+    ? null
+    : new ApolloClient({
+        cache: new InMemoryCache(),
+        link,
+      });
   return client ? (
     <ApolloProvider client={client}>
       <BaseApp />

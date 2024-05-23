@@ -6,6 +6,9 @@ import { join } from 'path';
 import { VideosResolver } from './videos/videos.resolver';
 import { GroupsResolver } from './groups/groups.resolver';
 import { PrismaService } from './prisma.service';
+import { GroupsService } from './groups/groups.service';
+import { SeasonsService } from './seasons/seasons.service';
+import { VideosService } from './videos/videos.service';
 
 @Module({
   imports: [
@@ -15,6 +18,13 @@ import { PrismaService } from './prisma.service';
       sortSchema: true,
     }),
   ],
-  providers: [PrismaService, VideosResolver, GroupsResolver],
+  providers: [
+    PrismaService,
+    VideosResolver,
+    GroupsResolver,
+    GroupsService,
+    SeasonsService,
+    VideosService,
+  ],
 })
 export class AppModule {}

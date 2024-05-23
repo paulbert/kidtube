@@ -10,6 +10,9 @@ export class Video {
 
   @Field(type => [VideoThumbnail])
   videoThumbnails: VideoThumbnail[];
+
+  @Field()
+  order: number;
 }
 
 @ObjectType()

@@ -4,7 +4,7 @@ import { Video } from '../../gql/graphql';
 const VideoPlayer = ({ video }: { video: Video }) => {
   const { title, videoId } = video;
   return (
-    <AspectRatio maxW="800px" ratio={16 / 9}>
+    <AspectRatio ratio={16 / 9}>
       <iframe
         title={title}
         src={`https://vid.puffyan.us/embed/${videoId}`}

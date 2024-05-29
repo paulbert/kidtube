@@ -6,19 +6,24 @@ import {
   HttpLink,
 } from '@apollo/client';
 import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Container } from '@chakra-ui/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from './search/Search';
+import Navbar from './navigation/Navbar';
 
 // exported for testing
 export function BaseApp() {
   return (
     <ChakraProvider>
       <BrowserRouter future={{ v7_startTransition: true }}>
-        <Routes>
-          <Route path="/" element={<Search />}></Route>
-        </Routes>
+        <Navbar />
+        <Container maxW="container.lg" my={4}>
+          <Routes>
+            <Route path="/" element={<div>Home</div>} />
+            <Route path="/parent/search" element={<Search />} />
+          </Routes>
+        </Container>
       </BrowserRouter>
     </ChakraProvider>
   );

@@ -24,7 +24,7 @@ const Search = () => {
   const [query, setQuery] = useState('');
 
   return (
-    <Container maxW="container.lg" my={4}>
+    <>
       <Flex align="center" gap={2}>
         <Input
           size="lg"
@@ -38,7 +38,7 @@ const Search = () => {
           <VideoSearchCard video={video} key={video.videoId} />
         ))}
       </Grid>
-    </Container>
+    </>
   );
 };
 

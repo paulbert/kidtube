@@ -11,6 +11,7 @@ export class GroupsService {
       data: {
         name,
         bannerUrl: '',
+        thumbnailUrl: '',
       },
     });
   }

@@ -93,7 +93,7 @@
         "description": null,
         "fields": [
           {
-            "name": "banner_url",
+            "name": "bannerUrl",
             "description": null,
             "args": [],
             "type": {
@@ -165,7 +165,7 @@
             "deprecationReason": null
           },
           {
-            "name": "thumbnail_url",
+            "name": "thumbnailUrl",
             "description": null,
             "args": [],
             "type": {

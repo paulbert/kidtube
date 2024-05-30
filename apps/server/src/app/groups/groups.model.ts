@@ -10,10 +10,10 @@ export class Group {
   id: number;
 
   @Field()
-  banner_url: string;
+  bannerUrl: string;
 
   @Field()
-  thumbnail_url: string;
+  thumbnailUrl: string;
 
   @Field(type => [Season])
   seasons: Season[];

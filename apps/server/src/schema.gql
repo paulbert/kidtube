@@ -9,11 +9,11 @@ input AddVideosToGroupInput {
 }
 
 type Group {
-  banner_url: String!
+  bannerUrl: String!
   id: Float!
   name: String!
   seasons: [Season!]!
-  thumbnail_url: String!
+  thumbnailUrl: String!
 }
 
 type Mutation {

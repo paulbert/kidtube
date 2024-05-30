@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { Card, CardBody, Grid, GridItem, Image, Text } from '@chakra-ui/react';
 import { GetLibraryPageGroupsQuery } from '../../gql/graphql';
@@ -25,7 +26,7 @@ const Library = () => {
       {groups.map(({ id, thumbnailUrl, name }) => (
         <GridItem key={id}>
           <Card boxShadow="none">
-            <CardBody>
+            <CardBody as={ReactRouterLink} to={`/group/${id}`}>
               {thumbnailUrl ? (
                 <Image src={thumbnailUrl} borderRadius="lg" alt={name} />
               ) : (

@@ -11,7 +11,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from './search/Search';
 import Navbar from './navigation/Navbar';
-import Main from './main/Main';
+import Library from './library/Library';
 
 // exported for testing
 export function BaseApp() {
@@ -21,7 +21,7 @@ export function BaseApp() {
         <Navbar />
         <Container maxW="container.lg" my={4}>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Library />} />
             <Route path="/parent/search" element={<Search />} />
           </Routes>
         </Container>

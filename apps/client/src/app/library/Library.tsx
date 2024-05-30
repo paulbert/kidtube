@@ -1,10 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
 
 import { Card, CardBody, Grid, GridItem, Image, Text } from '@chakra-ui/react';
-import { GetMainPageGroupsQuery } from '../../gql/graphql';
+import { GetLibraryPageGroupsQuery } from '../../gql/graphql';
 
-export const getMainPageGroupsQuery = gql`
-  query GetMainPageGroups {
+export const getLibraryPageGroupsQuery = gql`
+  query GetLibraryPageGroups {
     getAllGroups {
       id
       name
@@ -13,8 +13,10 @@ export const getMainPageGroupsQuery = gql`
   }
 `;
 
-const Main = () => {
-  const { data } = useQuery<GetMainPageGroupsQuery>(getMainPageGroupsQuery);
+const Library = () => {
+  const { data } = useQuery<GetLibraryPageGroupsQuery>(
+    getLibraryPageGroupsQuery
+  );
 
   const groups = data?.getAllGroups || [];
 
@@ -37,4 +39,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Library;

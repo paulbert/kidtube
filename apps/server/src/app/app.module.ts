@@ -9,6 +9,7 @@ import { PrismaService } from './prisma.service';
 import { GroupsService } from './groups/groups.service';
 import { SeasonsService } from './seasons/seasons.service';
 import { VideosService } from './videos/videos.service';
+import { SeasonsResolver } from './seasons/seasons.resolver';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { VideosService } from './videos/videos.service';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'apps/server/src/schema.gql'),
       sortSchema: true,
+      buildSchemaOptions: { numberScalarMode: 'integer' },
     }),
   ],
   providers: [
@@ -23,6 +25,7 @@ import { VideosService } from './videos/videos.service';
     VideosResolver,
     GroupsResolver,
     GroupsService,
+    SeasonsResolver,
     SeasonsService,
     VideosService,
   ],

@@ -3,17 +3,24 @@
 # ------------------------------------------------------
 
 input AddVideosToGroupInput {
-  id: Float
+  id: Int
   name: String
   videos: [VideoInput!]!
 }
 
 type Group {
   bannerUrl: String!
-  id: Float!
+  id: Int!
   name: String!
   seasons: [Season!]!
   thumbnailUrl: String!
+}
+
+type InvidiousVideo {
+  order: Int!
+  title: String!
+  videoId: String!
+  videoThumbnails: [VideoThumbnail!]!
 }
 
 type Mutation {
@@ -22,21 +29,23 @@ type Mutation {
 
 type Query {
   getAllGroups: [Group!]!
-  videoSearch(query: String!): [Video!]!
+  getSeasons(groupId: Int!): [Season!]!
+  videoSearch(query: String!): [InvidiousVideo!]!
 }
 
 type Season {
-  groupId: Float!
-  id: Float!
-  order: Float!
+  groupId: Int!
+  id: Int!
+  order: Int!
   videos: Video!
 }
 
 type Video {
-  order: Float!
+  id: String!
+  order: Int!
+  seasonId: Int!
+  thumbnailUrl: String!
   title: String!
-  videoId: String!
-  videoThumbnails: [VideoThumbnail!]!
 }
 
 input VideoInput {

@@ -33,7 +33,6 @@ export type Group = {
 
 export type InvidiousVideo = {
   __typename?: 'InvidiousVideo';
-  order: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   videoId: Scalars['String']['output'];
   videoThumbnails: Array<VideoThumbnail>;

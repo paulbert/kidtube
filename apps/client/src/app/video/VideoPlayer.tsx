@@ -1,8 +1,15 @@
 import { AspectRatio } from '@chakra-ui/react';
-import { Video } from '../../gql/graphql';
+import { InvidiousVideo, Video } from '../../gql/graphql';
 
-const VideoPlayer = ({ video }: { video: Video }) => {
-  const { title, videoId } = video;
+function isInvidiousVideo(
+  video: InvidiousVideo | Video
+): video is InvidiousVideo {
+  return (video as InvidiousVideo).videoId !== undefined;
+}
+
+const VideoPlayer = ({ video }: { video: InvidiousVideo | Video }) => {
+  const { title } = video;
+  const videoId = isInvidiousVideo(video) ? video.videoId : video.id;
   return (
     <AspectRatio ratio={16 / 9}>
       <iframe

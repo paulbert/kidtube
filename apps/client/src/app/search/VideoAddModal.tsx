@@ -17,7 +17,7 @@ import { useState } from 'react';
 import {
   AddVideosToGroupMutation,
   GetAllGroupsQuery,
-  Video,
+  InvidiousVideo,
 } from '../../gql/graphql';
 
 export const getAllGroupsQuery = gql`
@@ -43,7 +43,7 @@ export const addVideosToGroupMutation = gql`
 
 type VideoAddModalProps = {
   buttonText: string;
-  videos: Video[];
+  videos: InvidiousVideo[];
 };
 
 const VideoAddModal = ({ buttonText, videos }: VideoAddModalProps) => {

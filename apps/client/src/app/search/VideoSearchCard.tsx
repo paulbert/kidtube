@@ -1,9 +1,9 @@
 import { ButtonGroup, Card, CardFooter, GridItem } from '@chakra-ui/react';
-import { Video } from '../../gql/graphql';
+import { InvidiousVideo } from '../../gql/graphql';
 import VideoAddModal from './VideoAddModal';
 import VideoSearchCardBody from './VideoSearchCardBody';
 
-const VideoSearchCard = ({ video }: { video: Video }) => {
+const VideoSearchCard = ({ video }: { video: InvidiousVideo }) => {
   return (
     <GridItem>
       <Card boxShadow="none">

@@ -17,7 +17,6 @@ type Group {
 }
 
 type InvidiousVideo {
-  order: Int!
   title: String!
   videoId: String!
   videoThumbnails: [VideoThumbnail!]!

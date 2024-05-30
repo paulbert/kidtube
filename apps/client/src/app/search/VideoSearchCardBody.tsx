@@ -10,10 +10,10 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Video } from '../../gql/graphql';
+import { InvidiousVideo } from '../../gql/graphql';
 import VideoPlayer from '../video/VideoPlayer';
 
-const VideoSearchCardBody = ({ video }: { video: Video }) => {
+const VideoSearchCardBody = ({ video }: { video: InvidiousVideo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { title, videoThumbnails } = video;

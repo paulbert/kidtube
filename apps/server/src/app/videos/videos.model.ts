@@ -10,9 +10,6 @@ export class InvidiousVideo {
 
   @Field(type => [VideoThumbnail])
   videoThumbnails: VideoThumbnail[];
-
-  @Field()
-  order: number;
 }
 
 @ObjectType()

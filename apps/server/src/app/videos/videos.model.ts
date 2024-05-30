@@ -1,7 +1,7 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class Video {
+export class InvidiousVideo {
   @Field()
   title: string;
 
@@ -10,9 +10,24 @@ export class Video {
 
   @Field(type => [VideoThumbnail])
   videoThumbnails: VideoThumbnail[];
+}
+
+@ObjectType()
+export class Video {
+  @Field()
+  title: string;
+
+  @Field()
+  id: string;
+
+  @Field()
+  thumbnailUrl: string;
 
   @Field()
   order: number;
+
+  @Field()
+  seasonId: number;
 }
 
 @InputType()

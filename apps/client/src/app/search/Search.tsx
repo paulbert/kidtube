@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
-import { Button, Container, Flex, Grid, Input } from '@chakra-ui/react';
+import { Button, Flex, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Video } from '../../gql/graphql';
+import { VideoSearchQuery } from '../../gql/graphql';
 import VideoSearchCard from './VideoSearchCard';
 
 export const videoSearchQuery = gql`
@@ -20,7 +20,7 @@ export const videoSearchQuery = gql`
 `;
 
 const Search = () => {
-  const { data, refetch } = useQuery(videoSearchQuery);
+  const { data, refetch } = useQuery<VideoSearchQuery>(videoSearchQuery);
   const [query, setQuery] = useState('');
 
   return (
@@ -34,7 +34,7 @@ const Search = () => {
         <Button onClick={e => refetch({ query })}>Search</Button>
       </Flex>
       <Grid templateColumns="repeat(3, 1fr)" gap={4} data-testid="search-grid">
-        {data?.videoSearch.map((video: Video) => (
+        {data?.videoSearch.map(video => (
           <VideoSearchCard video={video} key={video.videoId} />
         ))}
       </Grid>

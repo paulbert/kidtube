@@ -36,7 +36,7 @@ type Season {
   groupId: Int!
   id: Int!
   order: Int!
-  videos: Video!
+  videos: [Video!]!
 }
 
 type Video {

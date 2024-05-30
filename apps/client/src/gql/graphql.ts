@@ -70,7 +70,7 @@ export type Season = {
   groupId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   order: Scalars['Int']['output'];
-  videos: Video;
+  videos: Array<Video>;
 };
 
 export type Video = {
@@ -113,7 +113,7 @@ export type SeasonsQueryQueryVariables = Exact<{
 }>;
 
 
-export type SeasonsQueryQuery = { __typename?: 'Query', getSeasons: Array<{ __typename?: 'Season', id: number, videos: { __typename?: 'Video', id: string, title: string, thumbnailUrl: string } }> };
+export type SeasonsQueryQuery = { __typename?: 'Query', getSeasons: Array<{ __typename?: 'Season', id: number, videos: Array<{ __typename?: 'Video', id: string, title: string, thumbnailUrl: string }> }> };
 
 export type VideoSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];

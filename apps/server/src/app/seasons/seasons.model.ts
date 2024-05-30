@@ -12,6 +12,6 @@ export class Season {
   @Field()
   order: number;
 
-  @Field(type => Video)
+  @Field(type => [Video])
   videos: Video[];
 }

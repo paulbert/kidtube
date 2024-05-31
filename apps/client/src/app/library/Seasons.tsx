@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { SeasonsQueryQuery } from '../../gql/graphql';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useState } from 'react';
 
 const seasonsQuery = gql`
@@ -52,7 +52,7 @@ const Seasons = () => {
       <List spacing={3}>
         {season?.videos.map(({ thumbnailUrl, title, id }) => (
           <ListItem key={id}>
-            <HStack spacing={2}>
+            <HStack spacing={2} as={ReactRouterLink} to={`/video/${id}`}>
               <Image src={thumbnailUrl} maxH={20} borderRadius="md" />
               <Text>{title}</Text>
             </HStack>

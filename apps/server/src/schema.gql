@@ -29,6 +29,7 @@ type Mutation {
 type Query {
   getAllGroups: [Group!]!
   getSeasons(groupId: Int!): [Season!]!
+  getVideo(id: String!): Video!
   videoSearch(query: String!): [InvidiousVideo!]!
 }
 

@@ -13,6 +13,7 @@ import Search from './search/Search';
 import Navbar from './navigation/Navbar';
 import Library from './library/Library';
 import Seasons from './library/Seasons';
+import VideoViewer from './video/VideoViewer';
 
 // exported for testing
 export function BaseApp() {
@@ -25,6 +26,7 @@ export function BaseApp() {
             <Route path="/" element={<Library />} />
             <Route path="/parent/search" element={<Search />} />
             <Route path="/group/:groupId" element={<Seasons />} />
+            <Route path="/video/:id" element={<VideoViewer />} />
           </Routes>
         </Container>
       </BrowserRouter>

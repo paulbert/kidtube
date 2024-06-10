@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { SeasonsQueryQuery } from '../../gql/graphql';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const seasonsQuery = gql`
   query SeasonsQuery($groupId: Int!) {
@@ -35,17 +35,27 @@ const Seasons = () => {
   });
   const [season, setSeason] = useState<Season>();
 
-  const seasons = data?.getSeasons.filter(s => s.videos.length > 0) || [];
+  const seasons = useMemo(() => {
+    const newSeasons =
+      data?.getSeasons
+        .filter(s => s.videos.length > 0)
+        .sort((a, b) => a.order - b.order) || [];
+    setSeason(newSeasons[0]);
+    return newSeasons;
+  }, [data?.getSeasons]);
 
   return (
     <VStack spacing={3} align="start">
       <Select
-        onChange={event =>
-          setSeason(seasons.find(s => s.id === parseInt(event.target.value)))
-        }
+        onChange={event => {
+          console.log(event);
+          setSeason(seasons.find(s => s.id === parseInt(event.target.value)));
+        }}
       >
-        {seasons.map(s => (
-          <option value={s.id}>Season {s.id}</option>
+        {seasons.map((s, index) => (
+          <option value={s.id} key={s.id}>
+            Season {index + 1}
+          </option>
         ))}
       </Select>
 

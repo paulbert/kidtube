@@ -57,15 +57,13 @@ export class GroupsResolver {
           name,
         })
       : this.prismaService.group.findUnique({ where: { id: id } }));
-    console.log(group);
-    const season = await this.seasonsService.createNewSeason({
+    const season = await this.seasonsService.createOrGetFirstSeason({
       groupId: group.id,
     });
-    const insertedVideos = await this.videosService.addNewVideos({
+    await this.videosService.addNewVideos({
       videos,
       seasonId: season.id,
     });
-    console.log(insertedVideos);
     return group;
   }
 

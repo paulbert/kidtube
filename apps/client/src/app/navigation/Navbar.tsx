@@ -1,4 +1,4 @@
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -9,7 +9,26 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 
+const ParentButtons = () => (
+  <ButtonGroup>
+    <Button variant="ghost" as={ReactRouterLink} to="/">
+      Kid Mode
+    </Button>
+  </ButtonGroup>
+);
+
+const KidButtons = () => (
+  <ButtonGroup>
+    <Button variant="ghost" as={ReactRouterLink} to="/parent/search">
+      Parent Mode
+    </Button>
+  </ButtonGroup>
+);
+
 const Navbar = () => {
+  const location = useLocation();
+  const isParentMode = location.pathname.startsWith('/parent');
+
   return (
     <>
       <Container maxW="container.xl">
@@ -20,11 +39,7 @@ const Navbar = () => {
             kidtube
           </Heading>
           <Spacer />
-          <ButtonGroup>
-            <Button variant="ghost" as={ReactRouterLink} to="/parent/search">
-              Parent Mode
-            </Button>
-          </ButtonGroup>
+          {isParentMode ? <ParentButtons /> : <KidButtons />}
         </Flex>
       </Container>
       <Divider />

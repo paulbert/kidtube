@@ -10,11 +10,20 @@ import {
 } from '@chakra-ui/react';
 
 const ParentButtons = () => (
-  <ButtonGroup>
-    <Button variant="ghost" as={ReactRouterLink} to="/">
-      Kid Mode
+  <>
+    <Button variant="ghost" as={ReactRouterLink} to="/parent/search">
+      Search
     </Button>
-  </ButtonGroup>
+    <Button variant="ghost" as={ReactRouterLink} to="/parent/library">
+      Library
+    </Button>
+    <Spacer />
+    <ButtonGroup>
+      <Button variant="ghost" as={ReactRouterLink} to="/">
+        Kid Mode
+      </Button>
+    </ButtonGroup>
+  </>
 );
 
 const KidButtons = () => (

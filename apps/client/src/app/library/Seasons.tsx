@@ -4,6 +4,7 @@ import {
   Checkbox,
   HStack,
   Image,
+  Input,
   List,
   ListItem,
   Modal,
@@ -144,9 +145,11 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
 
   return (
     <VStack spacing={3} align="start">
-      <Button isDisabled={checkedVideoIds.size <= 0} onClick={onOpen}>
-        Change Season for Selected
-      </Button>
+      {isParentMode ? (
+        <Button isDisabled={checkedVideoIds.size <= 0} onClick={onOpen}>
+          Change Season for Selected
+        </Button>
+      ) : null}
       <Select onChange={onSeasonChange}>
         {seasons.map((s, index) => (
           <option value={s.id} key={s.id}>

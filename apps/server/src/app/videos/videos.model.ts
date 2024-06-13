@@ -31,7 +31,16 @@ export class Video {
 }
 
 @InputType()
-export class VideoInput {
+export class UpdateVideosSeasonInput {
+  @Field(type => [String])
+  videoIds: string[];
+
+  @Field({ nullable: true })
+  seasonId: number;
+}
+
+@InputType()
+export class InvidiousVideoInput {
   @Field()
   title: string;
 

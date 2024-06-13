@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
-import { VideoInput } from './videos.model';
+import { InvidiousVideoInput, Video } from './videos.model';
+import { SeasonsService } from '../seasons/seasons.service';
 
 @Injectable()
 export class VideosService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private seasonsService: SeasonsService
+  ) {}
 
   async addNewVideos({
     videos,
     seasonId,
   }: {
-    videos: VideoInput[];
+    videos: InvidiousVideoInput[];
     seasonId: number;
   }) {
     const currentVideosInSeason = await this.prismaService.video.findMany({
@@ -32,5 +36,36 @@ export class VideosService {
       data,
       skipDuplicates: true,
     });
+  }
+
+  async updateVideosSeason(videoIds: string[], seasonId: number) {
+    return await this.prismaService.video.updateMany({
+      data: { seasonId },
+      where: { id: { in: videoIds } },
+    });
+  }
+
+  async addVideosToNewSeason(videoIds: string[]) {
+    // Assumes videos are all in same season
+    const data = await this.prismaService.video.findFirst({
+      select: {
+        id: true,
+        season: { select: { group: { select: { id: true } } } },
+      },
+      where: { id: videoIds[0] },
+    });
+    const groupId = data.season.group.id;
+    const allSeasonsInGroup = await this.prismaService.season.findMany({
+      where: { groupId },
+    });
+    const maxGroupOrder = allSeasonsInGroup.reduce(
+      (max, group) => (group.order > max ? group.order : max),
+      0
+    );
+    const newSeason = await this.seasonsService.createNewSeason({
+      groupId,
+      order: maxGroupOrder + 1,
+    });
+    this.updateVideosSeason(videoIds, newSeason.id);
   }
 }

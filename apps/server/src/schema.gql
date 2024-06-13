@@ -5,7 +5,7 @@
 input AddVideosToGroupInput {
   id: Int
   name: String
-  videos: [VideoInput!]!
+  videos: [InvidiousVideoInput!]!
 }
 
 type Group {
@@ -22,8 +22,15 @@ type InvidiousVideo {
   videoThumbnails: [VideoThumbnail!]!
 }
 
+input InvidiousVideoInput {
+  title: String!
+  videoId: String!
+  videoThumbnails: [VideoThumbnailInput!]!
+}
+
 type Mutation {
   addVideosToGroup(data: AddVideosToGroupInput!): Group!
+  updateVideosSeason(data: UpdateVideosSeasonInput!): [Video!]!
 }
 
 type Query {
@@ -40,18 +47,17 @@ type Season {
   videos: [Video!]!
 }
 
+input UpdateVideosSeasonInput {
+  seasonId: Int
+  videoIds: [String!]!
+}
+
 type Video {
   id: String!
   order: Int!
   seasonId: Int!
   thumbnailUrl: String!
   title: String!
-}
-
-input VideoInput {
-  title: String!
-  videoId: String!
-  videoThumbnails: [VideoThumbnailInput!]!
 }
 
 type VideoThumbnail {

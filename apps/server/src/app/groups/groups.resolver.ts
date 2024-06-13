@@ -17,7 +17,7 @@ import { Season } from '../seasons/seasons.model';
 import { GroupsService } from './groups.service';
 import { SeasonsService } from '../seasons/seasons.service';
 import { VideosService } from '../videos/videos.service';
-import { VideoInput } from '../videos/videos.model';
+import { InvidiousVideoInput } from '../videos/videos.model';
 
 @InputType()
 class AddVideosToGroupInput {
@@ -27,8 +27,8 @@ class AddVideosToGroupInput {
   @Field({ nullable: true })
   name: string;
 
-  @Field(type => [VideoInput])
-  videos: VideoInput[];
+  @Field(type => [InvidiousVideoInput])
+  videos: InvidiousVideoInput[];
 }
 
 @Resolver(of => Group)

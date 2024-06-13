@@ -26,7 +26,7 @@ const Library = () => {
       {groups.map(({ id, thumbnailUrl, name }) => (
         <GridItem key={id}>
           <Card boxShadow="none">
-            <CardBody as={ReactRouterLink} to={`/group/${id}`}>
+            <CardBody as={ReactRouterLink} to={`group/${id}`}>
               {thumbnailUrl ? (
                 <Image src={thumbnailUrl} borderRadius="lg" alt={name} />
               ) : (

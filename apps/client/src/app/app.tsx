@@ -24,9 +24,16 @@ export function BaseApp() {
         <Container maxW="container.lg" my={4}>
           <Routes>
             <Route path="/" element={<Library />} />
-            <Route path="/parent/search" element={<Search />} />
             <Route path="/group/:groupId" element={<Seasons />} />
             <Route path="/video/:id" element={<VideoViewer />} />
+
+            {/* PARENT ROUTES */}
+            <Route path="/parent/search" element={<Search />} />
+            <Route path="/parent/library" element={<Library />} />
+            <Route
+              path="/parent/library/group/:groupId"
+              element={<Seasons isParentMode />}
+            />
           </Routes>
         </Container>
       </BrowserRouter>

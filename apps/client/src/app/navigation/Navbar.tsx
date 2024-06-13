@@ -44,6 +44,8 @@ const Navbar = () => {
         <Flex sx={{ alignItems: 'center' }}>
           <Heading
             sx={{ fontFamily: '"Comic Sans MS", "Comic Sans", "Tahoma"' }}
+            as={ReactRouterLink}
+            to={isParentMode ? '/parent/search' : '/'}
           >
             kidtube
           </Heading>

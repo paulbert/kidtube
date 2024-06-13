@@ -1,5 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import {
+  Button,
+  Checkbox,
   HStack,
   Image,
   List,
@@ -28,12 +30,15 @@ const seasonsQuery = gql`
 
 type Season = SeasonsQueryQuery['getSeasons'][number];
 
-const Seasons = () => {
+const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
   const groupId = parseInt(useParams().groupId || '');
   const { data } = useQuery<SeasonsQueryQuery>(seasonsQuery, {
     variables: { groupId },
   });
   const [season, setSeason] = useState<Season>();
+  const [checkedVideoIds, setCheckedVideoIds] = useState<Set<string>>(
+    new Set([])
+  );
 
   const seasons = useMemo(() => {
     const newSeasons =
@@ -44,8 +49,53 @@ const Seasons = () => {
     return newSeasons;
   }, [data?.getSeasons]);
 
+  const onCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    const newVideoIds = new Set(checkedVideoIds);
+    if (event.target.checked) {
+      newVideoIds.add(id);
+    } else {
+      newVideoIds.delete(id);
+    }
+    setCheckedVideoIds(newVideoIds);
+  };
+
+  const ParentListItem = ({ video }: { video: Season['videos'][number] }) => {
+    const { thumbnailUrl, id, title } = video;
+    return (
+      <ListItem>
+        <HStack spacing={2}>
+          <Checkbox
+            size="lg"
+            onChange={event => onCheckboxChange(event, id)}
+            isChecked={checkedVideoIds.has(id)}
+          />
+          <Image src={thumbnailUrl} maxH={20} borderRadius="md" />
+          <Text>{title}</Text>
+        </HStack>
+      </ListItem>
+    );
+  };
+
+  const KidListItem = ({ video }: { video: Season['videos'][number] }) => {
+    const { thumbnailUrl, id, title } = video;
+    return (
+      <ListItem>
+        <HStack spacing={2} as={ReactRouterLink} to={`/video/${id}`}>
+          <Image src={thumbnailUrl} maxH={20} borderRadius="md" />
+          <Text>{title}</Text>
+        </HStack>
+      </ListItem>
+    );
+  };
+
   return (
     <VStack spacing={3} align="start">
+      <Button isDisabled={checkedVideoIds.size <= 0}>
+        Change Season for Selected
+      </Button>
       <Select
         onChange={event => {
           console.log(event);
@@ -60,14 +110,13 @@ const Seasons = () => {
       </Select>
 
       <List spacing={3}>
-        {season?.videos.map(({ thumbnailUrl, title, id }) => (
-          <ListItem key={id}>
-            <HStack spacing={2} as={ReactRouterLink} to={`/video/${id}`}>
-              <Image src={thumbnailUrl} maxH={20} borderRadius="md" />
-              <Text>{title}</Text>
-            </HStack>
-          </ListItem>
-        ))}
+        {season?.videos.map(video =>
+          isParentMode ? (
+            <ParentListItem video={video} key={video.id} />
+          ) : (
+            <KidListItem video={video} key={video.id} />
+          )
+        )}
       </List>
     </VStack>
   );

@@ -48,7 +48,7 @@ type Season {
 }
 
 input UpdateVideosSeasonInput {
-  seasonId: Int!
+  seasonId: Int
   videoIds: [String!]!
 }
 

@@ -35,7 +35,7 @@ export class UpdateVideosSeasonInput {
   @Field(type => [String])
   videoIds: string[];
 
-  @Field()
+  @Field({ nullable: true })
   seasonId: number;
 }
 

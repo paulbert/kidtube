@@ -89,6 +89,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
   };
 
   const onSeasonChangeConfirm = () => {
+    console.log(seasonIdToChange);
     updateVideosSeason({
       variables: {
         data: {
@@ -184,6 +185,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
                   Season {index + 1}
                 </option>
               ))}
+              <option value={undefined}>Add New Season</option>
             </Select>
           </ModalBody>
           <ModalFooter>

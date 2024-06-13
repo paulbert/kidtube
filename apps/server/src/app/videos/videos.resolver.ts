@@ -34,7 +34,11 @@ export class VideosResolver {
   @Mutation(returns => [Video])
   async updateVideosSeason(@Args('data') data: UpdateVideosSeasonInput) {
     const { videoIds, seasonId } = data;
-    await this.videosService.updateVideosSeason(videoIds, seasonId);
+    if (seasonId) {
+      await this.videosService.updateVideosSeason(videoIds, seasonId);
+    } else {
+      await this.videosService.addVideosToNewSeason(videoIds);
+    }
     return this.prismaService.video.findMany({
       where: { id: { in: videoIds } },
     });

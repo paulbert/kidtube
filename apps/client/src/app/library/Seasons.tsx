@@ -28,6 +28,7 @@ import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import {
   DndContext,
+  DragEndEvent,
   closestCenter,
   closestCorners,
   useDraggable,
@@ -90,7 +91,6 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
         .filter(s => s.videos.length > 0)
         .sort((a, b) => a.order - b.order) || [];
     const firstSeason = newSeasons[0] || {};
-    console.log(firstSeason.id);
     setVideos(filterFalsy(firstSeason.videos));
     setSeasonIdToChange(firstSeason?.id);
     return newSeasons;
@@ -125,6 +125,19 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       newVideoIds.delete(id);
     }
     setCheckedVideoIds(newVideoIds);
+  };
+
+  const reorderVideos = (event: DragEndEvent) => {
+    const { over, active } = event;
+    const activeId = active.id.toString();
+    const overId = over?.id.toString();
+    if (!overId || overId === activeId) {
+      return;
+    }
+    const findVideoPosition = (id: string) =>
+      videos?.findIndex(video => video.id === id);
+    const startIndex = findVideoPosition(activeId);
+    const endIndex = findVideoPosition(overId);
   };
 
   const ParentListItem = ({ video }: { video: Season['videos'][number] }) => {
@@ -183,7 +196,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       </Select>
 
       {videos && videos.length > 0 ? (
-        <DndContext>
+        <DndContext onDragEnd={reorderVideos}>
           <SortableContext items={videos}>
             <List spacing={3}>
               {videos?.map(video =>

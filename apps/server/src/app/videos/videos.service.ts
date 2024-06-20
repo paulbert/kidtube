@@ -73,16 +73,26 @@ export class VideosService {
     const { seasonId, order } = await this.prismaService.video.findFirst({
       where: { id: videoId },
     });
+    const newOrder = newIndex + 1;
     const reorderOperation =
-      newIndex > order ? { decrement: 1 } : { increment: 1 };
+      newOrder > order ? { decrement: 1 } : { increment: 1 };
+    console.log(`order ${order}`);
+    console.log(`newOrder ${newOrder}`);
+    console.log(reorderOperation);
     return await this.prismaService.$transaction([
-      this.prismaService.video.update({
-        data: { order: newIndex + 1 },
-        where: { id: videoId },
-      }),
       this.prismaService.video.updateMany({
         data: { order: reorderOperation },
-        where: { seasonId },
+        where: {
+          seasonId,
+          order: {
+            gt: Math.min(order, newOrder - 1),
+            lt: Math.max(order, newOrder + 1),
+          },
+        },
+      }),
+      this.prismaService.video.update({
+        data: { order: newOrder },
+        where: { id: videoId },
       }),
       this.prismaService.video.findMany({ where: { seasonId } }),
     ]);

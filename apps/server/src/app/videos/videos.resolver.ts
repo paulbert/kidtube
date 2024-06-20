@@ -52,6 +52,9 @@ export class VideosResolver {
   @Mutation(returns => [Video])
   async reorderVideo(@Args('data') data: ReorderVideoInput) {
     const { videoId, newIndex } = data;
-    return await this.videosService.reorderVideo(videoId, newIndex);
+    const videos = await this.videosService.reorderVideo(videoId, newIndex);
+    console.log('VIDEOS');
+    console.log(videos);
+    return videos;
   }
 }

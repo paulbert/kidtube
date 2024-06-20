@@ -91,7 +91,7 @@ export class VideosService {
         data: { order: newOrder },
         where: { id: videoId },
       }),
-      this.prismaService.video.findMany({ where: { seasonId } }),
+      this.prismaService.season.findFirst({ where: { id: seasonId } }),
     ]);
     return transactionResult[2];
   }

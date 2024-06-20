@@ -1,7 +1,9 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import {
   Button,
+  Center,
   Checkbox,
+  Flex,
   HStack,
   Image,
   List,
@@ -14,6 +16,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   VStack,
   useDisclosure,
@@ -56,8 +59,12 @@ const reorderVideosMutation = gql`
   mutation ReorderVideo($data: ReorderVideoInput!) {
     reorderVideo(data: $data) {
       id
-      title
-      thumbnailUrl
+      videos {
+        id
+        title
+        thumbnailUrl
+      }
+      order
     }
   }
 `;
@@ -68,7 +75,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
   const groupId = parseInt(useParams().groupId || '');
   const { data, refetch } = useQuery<SeasonsQueryQuery>(seasonsQuery, {
     variables: { groupId },
-    fetchPolicy: 'no-cache',
+    // fetchPolicy: 'no-cache',
   });
   const [updateVideosSeason] = useMutation<UpdateVideosSeasonMutationMutation>(
     updateVideosSeasonMutation,
@@ -79,9 +86,8 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       },
     }
   );
-  const [reorderVideo] = useMutation<ReorderVideoMutation>(
-    reorderVideosMutation
-  );
+  const [reorderVideo, { loading: reorderLoading }] =
+    useMutation<ReorderVideoMutation>(reorderVideosMutation);
   const [videos, setVideos] = useState<Video[]>();
   const [seasonIdToChange, setSeasonIdToChange] = useState<number>();
   const [checkedVideoIds, setCheckedVideoIds] = useState<Set<string>>(
@@ -202,7 +208,11 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
         ))}
       </Select>
 
-      {videos && videos.length > 0 ? (
+      {reorderLoading ? (
+        <Center sx={{ width: '100%', marginY: 4 }}>
+          <Spinner />
+        </Center>
+      ) : videos && videos.length > 0 ? (
         <DndContext onDragEnd={onVideoDragEnd}>
           <SortableContext items={videos}>
             <List spacing={3}>

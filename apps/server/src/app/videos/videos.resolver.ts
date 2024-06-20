@@ -11,6 +11,7 @@ import {
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { VideosService } from './videos.service';
+import { Season } from '../seasons/seasons.model';
 
 const INVIDIOUS_API = 'https://vid.puffyan.us/';
 
@@ -49,7 +50,7 @@ export class VideosResolver {
     });
   }
 
-  @Mutation(returns => [Video])
+  @Mutation(returns => Season)
   async reorderVideo(@Args('data') data: ReorderVideoInput) {
     const { videoId, newIndex } = data;
     return await this.videosService.reorderVideo(videoId, newIndex);

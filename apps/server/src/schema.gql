@@ -30,7 +30,7 @@ input InvidiousVideoInput {
 
 type Mutation {
   addVideosToGroup(data: AddVideosToGroupInput!): Group!
-  reorderVideo(data: ReorderVideoInput!): [Video!]!
+  reorderVideo(data: ReorderVideoInput!): Season!
   updateVideosSeason(data: UpdateVideosSeasonInput!): [Video!]!
 }
 

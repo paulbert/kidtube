@@ -54,6 +54,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
   const groupId = parseInt(useParams().groupId || '');
   const { data, refetch } = useQuery<SeasonsQueryQuery>(seasonsQuery, {
     variables: { groupId },
+    fetchPolicy: 'no-cache',
   });
   const [updateVideosSeason] = useMutation<UpdateVideosSeasonMutationMutation>(
     updateVideosSeasonMutation,

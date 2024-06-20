@@ -19,6 +19,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import {
+  ReorderVideoMutation,
   SeasonsQueryQuery,
   UpdateVideosSeasonMutationMutation,
   Video,
@@ -51,6 +52,16 @@ const updateVideosSeasonMutation = gql`
   }
 `;
 
+const reorderVideosMutation = gql`
+  mutation ReorderVideo($data: ReorderVideoInput!) {
+    reorderVideo(data: $data) {
+      id
+      title
+      thumbnailUrl
+    }
+  }
+`;
+
 type Season = SeasonsQueryQuery['getSeasons'][number];
 
 const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
@@ -67,6 +78,9 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
         onClose();
       },
     }
+  );
+  const [reorderVideo] = useMutation<ReorderVideoMutation>(
+    reorderVideosMutation
   );
   const [videos, setVideos] = useState<Video[]>();
   const [seasonIdToChange, setSeasonIdToChange] = useState<number>();
@@ -120,17 +134,17 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
     setCheckedVideoIds(newVideoIds);
   };
 
-  const reorderVideos = (event: DragEndEvent) => {
+  const onVideoDragEnd = (event: DragEndEvent) => {
     const { over, active } = event;
     const activeId = active.id.toString();
     const overId = over?.id.toString();
     if (!overId || overId === activeId) {
       return;
     }
-    const findVideoPosition = (id: string) =>
-      videos?.findIndex(video => video.id === id);
-    const startIndex = findVideoPosition(activeId);
-    const endIndex = findVideoPosition(overId);
+    const endIndex = videos?.findIndex(video => video.id === overId);
+    reorderVideo({
+      variables: { data: { videoId: activeId, newIndex: endIndex } },
+    });
   };
 
   const ParentListItem = ({ video }: { video: Season['videos'][number] }) => {
@@ -189,7 +203,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       </Select>
 
       {videos && videos.length > 0 ? (
-        <DndContext onDragEnd={reorderVideos}>
+        <DndContext onDragEnd={onVideoDragEnd}>
           <SortableContext items={videos}>
             <List spacing={3}>
               {videos?.map(video =>

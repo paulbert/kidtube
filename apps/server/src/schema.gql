@@ -30,6 +30,7 @@ input InvidiousVideoInput {
 
 type Mutation {
   addVideosToGroup(data: AddVideosToGroupInput!): Group!
+  reorderVideo(data: ReorderVideoInput!): [Video!]!
   updateVideosSeason(data: UpdateVideosSeasonInput!): [Video!]!
 }
 
@@ -38,6 +39,11 @@ type Query {
   getSeasons(groupId: Int!): [Season!]!
   getVideo(id: String!): Video!
   videoSearch(query: String!): [InvidiousVideo!]!
+}
+
+input ReorderVideoInput {
+  newIndex: Int!
+  videoId: String!
 }
 
 type Season {

@@ -22,9 +22,18 @@ import {
 import {
   SeasonsQueryQuery,
   UpdateVideosSeasonMutationMutation,
+  Video,
 } from '../../gql/graphql';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useMemo, useState } from 'react';
+import {
+  DndContext,
+  closestCenter,
+  closestCorners,
+  useDraggable,
+} from '@dnd-kit/core';
+import { SortableContext, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 const seasonsQuery = gql`
   query SeasonsQuery($groupId: Int!) {
@@ -65,12 +74,15 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       },
     }
   );
-  const [season, setSeason] = useState<Season>();
+  const [videos, setVideos] = useState<Video[]>();
   const [seasonIdToChange, setSeasonIdToChange] = useState<number>();
   const [checkedVideoIds, setCheckedVideoIds] = useState<Set<string>>(
     new Set([])
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const filterFalsy = (items: any[] | undefined) =>
+    items ? items.filter((item: any) => item) : [];
 
   const seasons = useMemo(() => {
     const newSeasons =
@@ -78,20 +90,20 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
         .filter(s => s.videos.length > 0)
         .sort((a, b) => a.order - b.order) || [];
     const firstSeason = newSeasons[0] || {};
-    setSeason(firstSeason);
+    console.log(firstSeason.id);
+    setVideos(filterFalsy(firstSeason.videos));
     setSeasonIdToChange(firstSeason?.id);
     return newSeasons;
   }, [data?.getSeasons]);
 
   const onSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const season = seasons.find(s => s.id === parseInt(event.target.value));
-    setSeason(season);
+    setVideos(filterFalsy(season?.videos));
     setSeasonIdToChange(season?.id || 0);
     setCheckedVideoIds(new Set([]));
   };
 
   const onSeasonChangeConfirm = () => {
-    console.log(seasonIdToChange);
     updateVideosSeason({
       variables: {
         data: {
@@ -117,8 +129,19 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
 
   const ParentListItem = ({ video }: { video: Season['videos'][number] }) => {
     const { thumbnailUrl, id, title } = video;
+
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({
+        id: video.id,
+      });
+
+    const sx = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+
     return (
-      <ListItem>
+      <ListItem sx={sx} ref={setNodeRef} {...attributes} {...listeners}>
         <HStack spacing={2}>
           <Checkbox
             size="lg"
@@ -159,15 +182,21 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
         ))}
       </Select>
 
-      <List spacing={3}>
-        {season?.videos?.map(video =>
-          isParentMode ? (
-            <ParentListItem video={video} key={video.id} />
-          ) : (
-            <KidListItem video={video} key={video.id} />
-          )
-        )}
-      </List>
+      {videos && videos.length > 0 ? (
+        <DndContext>
+          <SortableContext items={videos}>
+            <List spacing={3}>
+              {videos?.map(video =>
+                isParentMode ? (
+                  <ParentListItem video={video} key={video.id} />
+                ) : (
+                  <KidListItem video={video} key={video.id} />
+                )
+              )}
+            </List>
+          </SortableContext>
+        </DndContext>
+      ) : null}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

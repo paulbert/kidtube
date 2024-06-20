@@ -4,7 +4,6 @@ import {
   Checkbox,
   HStack,
   Image,
-  Input,
   List,
   ListItem,
   Modal,
@@ -26,13 +25,7 @@ import {
 } from '../../gql/graphql';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useMemo, useState } from 'react';
-import {
-  DndContext,
-  DragEndEvent,
-  closestCenter,
-  closestCorners,
-  useDraggable,
-} from '@dnd-kit/core';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 

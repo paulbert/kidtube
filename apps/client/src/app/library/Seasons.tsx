@@ -75,7 +75,6 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
   const groupId = parseInt(useParams().groupId || '');
   const { data, refetch } = useQuery<SeasonsQueryQuery>(seasonsQuery, {
     variables: { groupId },
-    // fetchPolicy: 'no-cache',
   });
   const [updateVideosSeason] = useMutation<UpdateVideosSeasonMutationMutation>(
     updateVideosSeasonMutation,
@@ -167,15 +166,28 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
     };
 
     return (
-      <ListItem sx={sx} ref={setNodeRef} {...attributes} {...listeners}>
+      <ListItem sx={sx} ref={setNodeRef}>
         <HStack spacing={2}>
           <Checkbox
             size="lg"
             onChange={event => onCheckboxChange(event, id)}
             isChecked={checkedVideoIds.has(id)}
           />
-          <Image src={thumbnailUrl} maxH={20} borderRadius="md" />
-          <Text>{title}</Text>
+          <HStack
+            spacing={2}
+            sx={{ width: '100%' }}
+            {...attributes}
+            {...listeners}
+          >
+            <Image
+              src={thumbnailUrl}
+              maxH={20}
+              borderRadius="md"
+              {...attributes}
+              {...listeners}
+            />
+            <Text>{title}</Text>
+          </HStack>
         </HStack>
       </ListItem>
     );
@@ -215,7 +227,7 @@ const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
       ) : videos && videos.length > 0 ? (
         <DndContext onDragEnd={onVideoDragEnd}>
           <SortableContext items={videos}>
-            <List spacing={3}>
+            <List spacing={3} sx={{ width: '100%' }}>
               {videos?.map(video =>
                 isParentMode ? (
                   <ParentListItem video={video} key={video.id} />

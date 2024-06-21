@@ -5,8 +5,12 @@
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
     "dev": "npx nx run-many --parallel --target=serve --projects=client,server",
+    "build": "npx nx run-many --parallel --target=build --projects=client,server",
     "prisma-generate": "npx prisma generate --schema=./libs/db-migrations/prisma/schema.prisma",
-    "prisma-migrate": "npx prisma migrate dev --schema=./libs/db-migrations/prisma/schema.prisma"
+    "prisma-migrate": "npx prisma migrate dev --schema=./libs/db-migrations/prisma/schema.prisma",
+    "test": "npx nx run-many --target=test --projects=client,server --output-style=static",
+    "test-client": "npx nx test client",
+    "test-server": "npx nx test server"
   },
   "private": true,
   "dependencies": {

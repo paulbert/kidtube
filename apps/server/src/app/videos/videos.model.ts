@@ -52,6 +52,15 @@ export class InvidiousVideoInput {
 }
 
 @InputType()
+export class ReorderVideoInput {
+  @Field()
+  videoId: string;
+
+  @Field()
+  newIndex: number;
+}
+
+@InputType()
 export class VideoThumbnailInput {
   @Field()
   quality: string;

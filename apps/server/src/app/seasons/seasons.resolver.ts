@@ -18,6 +18,7 @@ export class SeasonsResolver {
   async videos(@Parent() season: Season) {
     return this.prismaService.video.findMany({
       where: { seasonId: season.id },
+      orderBy: { order: 'asc' },
     });
   }
 }

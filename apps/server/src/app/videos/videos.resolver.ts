@@ -2,10 +2,16 @@ import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import fetch from 'node-fetch';
 import { map, pick } from 'ramda';
 
-import { InvidiousVideo, UpdateVideosSeasonInput, Video } from './videos.model';
+import {
+  InvidiousVideo,
+  ReorderVideoInput,
+  UpdateVideosSeasonInput,
+  Video,
+} from './videos.model';
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { VideosService } from './videos.service';
+import { Season } from '../seasons/seasons.model';
 
 const INVIDIOUS_API = 'https://vid.puffyan.us/';
 
@@ -42,5 +48,11 @@ export class VideosResolver {
     return this.prismaService.video.findMany({
       where: { id: { in: videoIds } },
     });
+  }
+
+  @Mutation(returns => Season)
+  async reorderVideo(@Args('data') data: ReorderVideoInput) {
+    const { videoId, newIndex } = data;
+    return await this.videosService.reorderVideo(videoId, newIndex);
   }
 }

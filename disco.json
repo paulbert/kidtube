@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "services": {
+    "web": {
+      "command": "node /app/server/main.js",
+      "port": 80
+    }
+  }
+}

@@ -43,7 +43,10 @@ export function BaseApp() {
 
 export function App() {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:3000/graphql',
+    uri:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/graphql'
+        : '/graphql',
   });
   const removeTypenameLink = removeTypenameFromVariables();
   const link = from([removeTypenameLink, httpLink]);

@@ -7,6 +7,7 @@ const getGroup = gql`
   query GetGroup($id: Int!) {
     getGroup(id: $id) {
       id
+      name
       thumbnailUrl
     }
   }
@@ -30,7 +31,7 @@ const Group = ({ isParentMode = false }: { isParentMode?: boolean }) => {
 
   return group ? (
     <>
-      <Heading>Group Name</Heading>
+      <Heading>{group.name}</Heading>
       {isParentMode ? (
         <Input
           placeholder="Thumbnail Url"

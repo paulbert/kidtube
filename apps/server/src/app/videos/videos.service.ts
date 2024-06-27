@@ -32,9 +32,12 @@ export class VideosService {
       seasonId,
       order: index + maxOrder + 1,
     }));
-    return await this.prismaService.video.createManyAndReturn({
+    await this.prismaService.video.createMany({
       data,
       skipDuplicates: true,
+    });
+    return this.prismaService.video.findMany({
+      where: { id: { in: videos.map(({ videoId }) => videoId) } },
     });
   }
 

@@ -3,7 +3,6 @@ import {
   Button,
   Center,
   Checkbox,
-  Flex,
   HStack,
   Image,
   List,
@@ -71,8 +70,13 @@ const reorderVideosMutation = gql`
 
 type Season = SeasonsQueryQuery['getSeasons'][number];
 
-const Seasons = ({ isParentMode = false }: { isParentMode?: boolean }) => {
-  const groupId = parseInt(useParams().groupId || '');
+const Seasons = ({
+  isParentMode = false,
+  groupId,
+}: {
+  isParentMode?: boolean;
+  groupId: number;
+}) => {
   const { data, refetch } = useQuery<SeasonsQueryQuery>(seasonsQuery, {
     variables: { groupId },
   });

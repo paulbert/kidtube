@@ -14,6 +14,7 @@ import Navbar from './navigation/Navbar';
 import Library from './library/Library';
 import Seasons from './library/Seasons';
 import VideoViewer from './video/VideoViewer';
+import Group from './library/Group';
 
 // exported for testing
 export function BaseApp() {
@@ -24,7 +25,7 @@ export function BaseApp() {
         <Container maxW="container.lg" my={4}>
           <Routes>
             <Route path="/" element={<Library />} />
-            <Route path="/group/:groupId" element={<Seasons />} />
+            <Route path="/group/:groupId" element={<Group />} />
             <Route path="/video/:id" element={<VideoViewer />} />
 
             {/* PARENT ROUTES */}
@@ -32,7 +33,7 @@ export function BaseApp() {
             <Route path="/parent/library" element={<Library />} />
             <Route
               path="/parent/library/group/:groupId"
-              element={<Seasons isParentMode />}
+              element={<Group isParentMode />}
             />
           </Routes>
         </Container>

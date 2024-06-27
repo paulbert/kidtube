@@ -11,7 +11,7 @@ import {
 } from '@nestjs/graphql';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Group } from './groups.model';
+import { Group, UpdateGroupThumbnailUrlInput } from './groups.model';
 import { PrismaService } from '../prisma.service';
 import { Season } from '../seasons/seasons.model';
 import { GroupsService } from './groups.service';
@@ -46,6 +46,11 @@ export class GroupsResolver {
     return this.prismaService.group.findMany();
   }
 
+  @Query(returns => Group)
+  async getGroup(@Args('id') id: number) {
+    return await this.prismaService.group.findUnique({ where: { id } });
+  }
+
   @Mutation(returns => Group)
   async addVideosToGroup(
     @Args('data') data: AddVideosToGroupInput,
@@ -65,6 +70,17 @@ export class GroupsResolver {
       seasonId: season.id,
     });
     return group;
+  }
+
+  @Mutation(returns => Group)
+  async updateGroupThumbnailUrl(
+    @Args('data') data: UpdateGroupThumbnailUrlInput
+  ) {
+    const { id, newThumbnailUrl } = data;
+    return await this.groupsService.updateGroupThumbnailUrl(
+      id,
+      newThumbnailUrl
+    );
   }
 
   @ResolveField(returns => [Season])

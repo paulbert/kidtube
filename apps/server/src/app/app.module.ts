@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 import { VideosResolver } from './videos/videos.resolver';
@@ -11,6 +12,10 @@ import { SeasonsService } from './seasons/seasons.service';
 import { VideosService } from './videos/videos.service';
 import { SeasonsResolver } from './seasons/seasons.resolver';
 
+const staticSite = ServeStaticModule.forRoot({
+  rootPath: join(__dirname, '..', 'client'),
+});
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -19,6 +24,7 @@ import { SeasonsResolver } from './seasons/seasons.resolver';
       sortSchema: true,
       buildSchemaOptions: { numberScalarMode: 'integer' },
     }),
+    ...(process.env.NODE_ENV === 'production' ? [staticSite] : []),
   ],
   providers: [
     PrismaService,

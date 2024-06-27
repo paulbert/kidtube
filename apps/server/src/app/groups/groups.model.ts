@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Season } from '../seasons/seasons.model';
 
 @ObjectType()
@@ -17,4 +17,13 @@ export class Group {
 
   @Field(type => [Season])
   seasons: Season[];
+}
+
+@InputType()
+export class UpdateGroupThumbnailUrlInput {
+  @Field()
+  id: number;
+
+  @Field()
+  newThumbnailUrl: string;
 }

@@ -15,4 +15,11 @@ export class GroupsService {
       },
     });
   }
+
+  async updateGroupThumbnailUrl(id: number, newThumbnailUrl: string) {
+    return await this.prismaService.group.update({
+      data: { thumbnailUrl: newThumbnailUrl },
+      where: { id },
+    });
+  }
 }

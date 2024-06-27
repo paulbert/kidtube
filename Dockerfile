@@ -11,7 +11,7 @@ FROM node:22-alpine as runner
 
 COPY --from=builder /usr/src/app/dist/apps /app
 WORKDIR /app/server
-COPY --from=builder /usr/src/app/libs/db-migrations/prisma/schema.prisma .
+COPY --from=builder /usr/src/app/libs/db-migrations/prisma/ .
 RUN npm ci \
   && npx prisma generate \
   # Prune non-used files
